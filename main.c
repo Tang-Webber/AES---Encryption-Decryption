@@ -148,7 +148,7 @@ void InvMixColumns(unsigned char *a){      //Inverse MixColumns
 	for (i = 0; i < 16; i++)
 		a[i] = b[i];
 }
-//AES¥[±K 
+//AES Encryption 
 void AES(unsigned char plaintext[16], unsigned char ciphertext[16], unsigned char k[11][16],int Round) {
 	int i, round;
 	for(i = 0; i < 16; i++)
@@ -164,7 +164,7 @@ void AES(unsigned char plaintext[16], unsigned char ciphertext[16], unsigned cha
 	ShiftRows(ciphertext);
 	AddRoundKey(ciphertext, k[Round]);
 }
-//Aes¸Ñ±K 
+//AES Decryption 
 void RAES(unsigned char plaintext[16], unsigned char ciphertext[16], unsigned char k[11][16], int Round){
 	int i, round;
 	for(i = 0; i < 16; i++){ 
@@ -189,7 +189,7 @@ int main(int argc, char *argv[]) {
 	unsigned char ciphertext2[16] = {0xe6, 0x1b, 0x1d, 0x18, 0x68, 0x36, 0xd2, 0x5a, 0xc2, 0x4d, 0x3b, 0x47, 0x4a, 0x19, 0x5a, 0x72};  //±K¤å
 	unsigned char plaintext[32]={};
 	unsigned char Key[16]={0x48, 0x6A, 0x00, 0x4E, 0x29, 0x00, 0x74, 0x67, 0x5A , 0x00 ,0x39 ,0x77 ,0x72 ,0x63, 0x00 ,0x6D};
-	//2 5 9 14
+	//2 5 9 14 are unknown keys that need to be solved
 	Key[2] = 0x25;
 	Key[5] = 0x36;
 	Key[9] = 0x7D;
@@ -198,7 +198,9 @@ int main(int argc, char *argv[]) {
 	RAES(plaintext, ciphertext1, k, 10);
 	RAES(plaintext+16, ciphertext2, k, 10);
 	fprintf(out, "%s     \n%c %c %c %c", plaintext, Key[2], Key[5], Key[9], Key[14]);
-	/*The code How I Find the correct plaintext
+	//////////////////////////////////////////////////////////////////////////////////////
+	//How I Find the correct plaintext
+	/*
 	unsigned char a, b, c, d;
 	for(a = 0x00; a < 0x7E; a++){
 		for(b = 0x00;b < 0x7E; b++){
@@ -220,12 +222,12 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
-	*/
+	///////////////////////////////////////////////////////////////////////////////////*/
 	return 0;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    	
 }
 
-/*	reference:
-	https://cryptii.com/pipes/base64-to-hex
-	https://blog.csdn.net/weixin_56375405/article/details/123896872
-	https://cboard.cprogramming.com/c-programming/87805-[tutorial]-implementing-advanced-encryption-standard.html
-*/
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//	reference:
+//	https://cryptii.com/pipes/base64-to-hex
+//	https://blog.csdn.net/weixin_56375405/article/details/123896872
+//	https://cboard.cprogramming.com/c-programming/87805-[tutorial]-implementing-advanced-encryption-standard.html
